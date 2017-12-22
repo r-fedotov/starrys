@@ -85,8 +85,12 @@ class PostClient implements iClient {
 		if(curl_errno($curl)){
 			throw new SdkException(curl_error($curl), curl_errno($curl));
 		}
+        
+        if(empty(json_decode($response))){
+            throw new SdkException('Not json response '.$response);
+        }
 
-		return !empty(json_decode($response)) ? json_decode($response) : new stdClass();
+		return json_decode($response);
     }
 
 }
