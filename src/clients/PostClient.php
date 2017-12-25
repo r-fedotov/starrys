@@ -6,11 +6,11 @@ use Platron\Starrys\clients\iClient;
 use Platron\Starrys\SdkException;
 use Platron\Starrys\services\BaseServiceRequest;
 use Psr\Log\LoggerInterface;
-use stdClass;
+use Psr\Log\LogLevel;
 
 class PostClient implements iClient {
     
-    const LOG_LEVEL = 0;
+    const LOG_LEVEL = LogLevel::INFO;
     
 	/** @var string */
 	protected $url;
