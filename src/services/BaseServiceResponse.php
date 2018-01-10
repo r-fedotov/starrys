@@ -17,7 +17,7 @@ abstract class BaseServiceResponse {
      */
     public function __construct(stdClass $response) {
         foreach (get_object_vars($this) as $name => $value) {
-			if (!empty($response->$name)) {
+			if (isset($response->$name)) {
 				$this->$name = $response->$name;
 			}
 		}
