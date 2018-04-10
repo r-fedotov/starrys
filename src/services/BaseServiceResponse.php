@@ -9,8 +9,8 @@ abstract class BaseServiceResponse {
     /** @var int */
     protected $errorCode;
 	
-	/** @var string */
-	protected $errorMessages;
+    /** @var string */
+    protected $errorMessages = [];
     
     /**
      * @param stdClass $response
