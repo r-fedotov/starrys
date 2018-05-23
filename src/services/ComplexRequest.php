@@ -229,6 +229,7 @@ class ComplexRequest extends BaseServiceRequest{
 			'Credit' => $this->credit,
 			'Consideration' => $this->consideration,
 			'TaxMode' => $this->taxMode,
+			'DocumentType' => $this->documentType,
 			'PhoneOrEmail' => $this->email ? $this->email : $this->phone,
 			'Place' => $this->place,
 			'FullResponse' => $this->fullResponse,
