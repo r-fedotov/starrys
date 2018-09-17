@@ -5,43 +5,46 @@ namespace Platron\Starrys\services;
 use Platron\Starrys\data_objects\Line;
 use Platron\Starrys\handbooks\DocumentTypes;
 use Platron\Starrys\handbooks\TaxModes;
-use Platron\Starrys\SdkException;
 
 class ComplexRequest extends BaseServiceRequest
 {
 
 	/** @var string */
-	protected $device = 'auto';
+	protected $Device = 'auto';
 	/** @var string */
-	protected $fullResponse = false;
+	protected $ClientId;
 	/** @var string */
-	protected $group;
+	protected $Group;
 	/** @var int */
-	protected $requestId;
+	protected $RequestId;
 	/** @var int */
 	protected $documentType;
 	/** @var int */
-	protected $taxMode;
+	protected $TaxMode;
 	/** @var int */
-	protected $phone;
+	private $phone;
 	/** @var string */
-	protected $email;
+	private $email;
 	/** @var string */
-	protected $place;
+	protected $Place;
 	/** @var Line[] */
 	protected $lines;
 	/** @var string */
-	protected $password;
+	protected $Password;
 	/** @var float */
-	protected $cash;
+	protected $Cash;
 	/** @var float[] */
-	protected $nonCash;
+	protected $NonCash;
 	/** @var float */
-	protected $advancePayment;
+	protected $AdvancePayment;
 	/** @var float */
-	protected $credit;
+	protected $Credit;
 	/** @var float */
-	protected $consideration;
+	protected $Consideration;
+	/** @var string */
+	protected $Address;
+	/** @var string */
+	protected $Terminal;
 
 	/**
 	 * @inheritdoc
@@ -56,7 +59,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function __construct($requestId)
 	{
-		$this->requestId = $requestId;
+		$this->RequestId = (string)$requestId;
 	}
 
 	/**
@@ -65,7 +68,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addGroup($group)
 	{
-		$this->group = $group;
+		$this->Group = (string)$group;
 	}
 
 	/**
@@ -83,7 +86,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addTaxMode(TaxModes $taxMode)
 	{
-		$this->taxMode = $taxMode->getValue();
+		$this->TaxMode = $taxMode->getValue();
 	}
 
 	/**
@@ -92,7 +95,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addPhone($phone)
 	{
-		$this->phone = $phone;
+		$this->phone = (string)$phone;
 	}
 
 	/**
@@ -101,7 +104,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addEmail($email)
 	{
-		$this->email = $email;
+		$this->email = (string)$email;
 	}
 
 	/**
@@ -110,7 +113,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addCash($cash)
 	{
-		$this->cash = $cash;
+		$this->Cash = (int)$cash;
 	}
 
 	/**
@@ -121,7 +124,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addNonCash($firstAmount, $secondAmount = 0, $thirdAmount = 0)
 	{
-		$this->nonCash = [$firstAmount, $secondAmount, $thirdAmount];
+		$this->NonCash = [(int)$firstAmount, (int)$secondAmount, (int)$thirdAmount];
 	}
 
 	/**
@@ -130,7 +133,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addAdvancePayment($advancePayment)
 	{
-		$this->advancePayment = $advancePayment;
+		$this->AdvancePayment = (int)$advancePayment;
 	}
 
 	/**
@@ -139,7 +142,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addCredit($credit)
 	{
-		$this->credit = $credit;
+		$this->Credit = (int)$credit;
 	}
 
 	/**
@@ -148,7 +151,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addConsideration($consideration)
 	{
-		$this->consideration = $consideration;
+		$this->Consideration = (int)$consideration;
 	}
 
 	/**
@@ -157,7 +160,7 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addPlace($place)
 	{
-		$this->place = $place;
+		$this->Place = (string)$place;
 	}
 
 	/**
@@ -175,7 +178,31 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function addPassword($password)
 	{
-		$this->password = $password;
+		$this->Password = (string)$password;
+	}
+
+	/**
+	 * @param $clientId
+	 */
+	public function addClientId($clientId)
+	{
+		$this->ClientId = (string)$clientId;
+	}
+
+	/**
+	 * @param string $address
+	 */
+	public function addAddress($address)
+	{
+		$this->Address = (string)$address;
+	}
+
+	/**
+	 * @param $terminal
+	 */
+	public function addTerminal($terminal)
+	{
+		$this->Terminal = $terminal;
 	}
 
 	/**
@@ -183,28 +210,9 @@ class ComplexRequest extends BaseServiceRequest
 	 */
 	public function getParameters()
 	{
-		$lines = [];
-		foreach ($this->lines as $line) {
-			$lines[] = $line->getParameters();
-		}
-
-		$params = [
-			'Device' => $this->device,
-			'Group' => $this->group,
-			'Password' => $this->password,
-			'RequestId' => (string)$this->requestId,
-			'Lines' => $lines,
-			'Cash' => $this->cash,
-			'NonCash' => $this->nonCash,
-			'AdvancePayment' => $this->advancePayment,
-			'Credit' => $this->credit,
-			'Consideration' => $this->consideration,
-			'TaxMode' => $this->taxMode,
-			'PhoneOrEmail' => $this->email ? $this->email : $this->phone,
-			'Place' => $this->place,
-			'FullResponse' => $this->fullResponse,
-		];
-
+		$params = parent::getParameters();
+		$params['PhoneOrEmail'] = $this->email ? $this->email : $this->phone;
+		$params['FullResponse'] = true;
 		return $params;
 	}
 }
