@@ -2,6 +2,7 @@
 
 namespace Platron\Starrys\tests\integration;
 
+use Platron\Starrys\handbooks\TaxModes;
 use Platron\Starrys\tests\integration\MerchantSettings;
 
 class IntegrationTestBase extends \PHPUnit_Framework_TestCase {

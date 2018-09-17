@@ -4,6 +4,7 @@ namespace Platron\Starrys\tests\integration;
 
 use Platron\Starrys\clients\PostClient;
 use Platron\Starrys\data_objects\Line;
+use Platron\Starrys\handbooks\DocumentTypes;
 use Platron\Starrys\services\ComplexRequest;
 use Platron\Starrys\services\ComplexResponse;
 
@@ -14,13 +15,13 @@ class ComplexTest extends IntegrationTestBase {
 		$line->addPayAttribute(Line::PAY_ATTRIBUTE_TYPE_FULL_PAID_WITH_GET_PRODUCT);
 		
 		$complexServise = new ComplexRequest(time());
-		$complexServise->addDocumentType(ComplexRequest::DOCUMENT_TYPE_BUY)
-			->addEmail('test@test.ru')
-			->addPhone('79050000000')
-			->addPlace('www.test.ru')
-			->addTaxMode($this->taxMode)
-			->addLine($line)
-			->addNonCash(10.00);
+		$complexServise->addDocumentType(new DocumentTypes(DocumentTypes::BUY));
+		$complexServise->addEmail('test@test.ru');
+		$complexServise->addPhone('79050000000');
+		$complexServise->addPlace('www.test.ru');
+		$complexServise->addTaxMode(new TaxModes($this->taxMode));
+		$complexServise->addLine($line);
+		$complexServise->addNonCash(10.00);
 
 		$response = new ComplexResponse($client->sendRequest($complexServise));
 		
