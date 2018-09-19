@@ -21,14 +21,8 @@ class ComplexRequest extends BaseServiceRequest
 	protected $documentType;
 	/** @var int */
 	protected $TaxMode;
-	/** @var int */
-	private $phone;
-	/** @var string */
-	private $email;
 	/** @var string */
 	protected $Place;
-	/** @var Line[] */
-	protected $lines;
 	/** @var string */
 	protected $Password;
 	/** @var float */
@@ -45,6 +39,12 @@ class ComplexRequest extends BaseServiceRequest
 	protected $Address;
 	/** @var string */
 	protected $Terminal;
+	/** @var int */
+	private $phone;
+	/** @var string */
+	private $email;
+	/** @var Line[] */
+	private $lines;
 
 	/**
 	 * @inheritdoc
@@ -213,6 +213,9 @@ class ComplexRequest extends BaseServiceRequest
 		$params = parent::getParameters();
 		$params['PhoneOrEmail'] = $this->email ? $this->email : $this->phone;
 		$params['FullResponse'] = true;
+		foreach($this->lines as $line){
+			$params['Lines'][] = $line->getParameters();
+		}
 		return $params;
 	}
 }

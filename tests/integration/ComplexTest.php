@@ -12,6 +12,7 @@ use Platron\Starrys\handbooks\AgentModes;
 use Platron\Starrys\handbooks\DocumentTypes;
 use Platron\Starrys\handbooks\PayAttributeTypes;
 use Platron\Starrys\handbooks\Taxes;
+use Platron\Starrys\handbooks\TaxModes;
 use Platron\Starrys\services\ComplexRequest;
 use Platron\Starrys\services\ComplexResponse;
 
@@ -20,6 +21,7 @@ class ComplexTest extends IntegrationTestBase
 	public function testComplex()
 	{
 		$client = new PostClient($this->starrysApiUrl, $this->secretKeyPath, $this->certPath);
+		$client->setLogger(new TestLogger());
 		$complexRequest = $this->createComplexRequest();
 		$response = new ComplexResponse($client->sendRequest($complexRequest));
 		$this->assertTrue($response->isValid());
