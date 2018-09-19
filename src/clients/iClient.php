@@ -4,11 +4,12 @@ namespace Platron\Starrys\clients;
 
 use Platron\Starrys\services\BaseServiceRequest;
 
-interface iClient {
-    
-    /**
-     * Послать запрос
-     * @param \Platron\Starrys\BaseService $service
-     */
-    public function sendRequest(BaseServiceRequest $service);
+interface iClient
+{
+
+	/**
+	 * Послать запрос
+	 * @param BaseServiceRequest $service
+	 */
+	public function sendRequest(BaseServiceRequest $service);
 }
