@@ -11,7 +11,7 @@ abstract class BaseServiceResponse
 	protected $errorCode;
 
 	/** @var string */
-	protected $errorMessages;
+	protected $errorMessages = [];
 
 	/**
 	 * @param stdClass $response
