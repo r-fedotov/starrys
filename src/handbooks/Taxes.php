@@ -10,7 +10,7 @@ class Taxes extends Enum
 		NONE = 4,
 		VAT0 = 3,
 		VAT10 = 2,
-		VAT18 = 1,
+		VAT20 = 1,
 		VAT110 = 6,
-		VAT118 = 5;
+		VAT120 = 5;
 }
