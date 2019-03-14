@@ -10,7 +10,7 @@ abstract class BaseServiceResponse
 	/** @var int */
 	protected $errorCode;
 
-	/** @var string */
+	/** @var string[] */
 	protected $errorMessages = [];
 
 	/**
