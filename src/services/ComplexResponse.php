@@ -53,7 +53,7 @@ class ComplexResponse extends BaseServiceResponse
 		if (!empty($response->Response->Error)) {
 			$this->errorCode = $response->Response->Error;
 			foreach ($response->Response->ErrorMessages as $message) {
-				$this->errorMessages .= $message;
+				$this->errorMessages[] = $message;
 			}
 			return $this;
 		}
