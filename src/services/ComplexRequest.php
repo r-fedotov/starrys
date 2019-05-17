@@ -45,6 +45,12 @@ class ComplexRequest extends BaseServiceRequest
 	private $email;
 	/** @var Line[] */
 	private $lines;
+	/** @var string */
+	protected $CustomerName;
+	/** @var int */
+	protected $CustomerINN;
+	/** @var int */
+	protected $TaxCalculationMethod;
 
 	/**
 	 * @inheritdoc
@@ -198,11 +204,29 @@ class ComplexRequest extends BaseServiceRequest
 	}
 
 	/**
-	 * @param $terminal
+	 * @param string $customerName
+	 * @param int $customerINN
+	 */
+	public function addCustomer($customerName, $customerINN)
+	{
+		$this->CustomerName = $customerName;
+		$this->CustomerINN = $customerINN;
+	}
+
+	/**
+	 * @param int $terminal
 	 */
 	public function addTerminal($terminal)
 	{
 		$this->Terminal = $terminal;
+	}
+
+	/**'
+	 * @param int $taxCalculationMethod
+	 */
+	public function addTaxCalculationMethod($taxCalculationMethod)
+	{
+		$this->TaxCalculationMethod = $taxCalculationMethod;
 	}
 
 	/**
