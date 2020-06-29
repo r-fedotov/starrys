@@ -30,6 +30,8 @@ class Line extends BaseDataObject{
 	protected $AgentData;
 	/** @var ProviderData */
 	protected $ProviderData;
+	/** @var string */
+	protected $CGNFloat;
     
     /**
 	 * @param string $description Наименование товарной позиции
@@ -98,5 +100,13 @@ class Line extends BaseDataObject{
 	public function addProviderData(ProviderData $providerData)
 	{
 		$this->ProviderData = $providerData;
+	}
+
+	/**
+	 * @param $nomenclatureCode
+	 */
+	public function addNomenclatureCode($nomenclatureCode)
+	{
+		$this->CGNFloat = $nomenclatureCode;
 	}
 }
