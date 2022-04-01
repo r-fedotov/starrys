@@ -3,6 +3,7 @@
 namespace Platron\Starrys\data_objects;
 
 use Platron\Starrys\handbooks\AgentModes;
+use Platron\Starrys\handbooks\LineAttributeTypes;
 use Platron\Starrys\handbooks\PayAttributeTypes;
 use Platron\Starrys\handbooks\Taxes;
 
@@ -14,6 +15,8 @@ class Line extends BaseDataObject{
     protected $Price;
 	/** @var int */
 	protected $PayAttribute;
+	/** @var int */
+	protected $LineAttribute;
 	/** @var int */
 	protected $TaxId;
 	/** @var string */
@@ -52,6 +55,15 @@ class Line extends BaseDataObject{
 	 */
 	public function addPayAttribute(PayAttributeTypes $payAttributeType){
 		$this->PayAttribute = $payAttributeType->getValue();
+	}
+
+	/**
+	 * Признак предмета расчёта.
+	 * @param LineAttributeTypes $lineAttributeType
+	 */
+	public function addLineAttribute(LineAttributeTypes $lineAttributeType)
+	{
+		$this->LineAttribute = $lineAttributeType->getValue();
 	}
 
 	/**
@@ -109,4 +121,5 @@ class Line extends BaseDataObject{
 	{
 		$this->CGNFloat = $nomenclatureCode;
 	}
+
 }

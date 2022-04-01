@@ -10,6 +10,7 @@ use Platron\Starrys\data_objects\ProviderData;
 use Platron\Starrys\data_objects\TransferOperatorData;
 use Platron\Starrys\handbooks\AgentModes;
 use Platron\Starrys\handbooks\DocumentTypes;
+use Platron\Starrys\handbooks\LineAttributeTypes;
 use Platron\Starrys\handbooks\PayAttributeTypes;
 use Platron\Starrys\handbooks\Taxes;
 use Platron\Starrys\handbooks\TaxModes;
@@ -34,6 +35,7 @@ class ComplexTest extends IntegrationTestBase
 	{
 		$line = new Line('Test product', 1, 10.00, new Taxes(Taxes::VAT10));
 		$line->addPayAttribute(new PayAttributeTypes(PayAttributeTypes::FULL_PAID_WITH_GET_PRODUCT));
+		$line->addLineAttribute(new LineAttributeTypes(LineAttributeTypes::PRODUCT));
 
 		$agentData = new AgentData('Test operation', '79050000000');
 		$line->addAgentData($agentData);
