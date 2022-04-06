@@ -16,6 +16,21 @@ class Line extends BaseDataObject
         TAX_VAT118 = 5; // Ставка 18/118
 
     const
+        LINE_ATTRIBUTE_PRODUCT = 1,
+        LINE_ATTRIBUTE_TAX_PRODUCT = 2,
+        LINE_ATTRIBUTE_WORK = 3,
+        LINE_ATTRIBUTE_SERVICE = 4,
+        LINE_ATTRIBUTE_GAMBLING_RATE = 5,
+        LINE_ATTRIBUTE_GAMBLING_WINNING = 6,
+        LINE_ATTRIBUTE_LOTTERY_TICKET = 7,
+        LINE_ATTRIBUTE_LOTTERY_WINNING = 8,
+        LINE_ATTRIBUTE_PROVIDING_RID = 9,
+        LINE_ATTRIBUTE_PAYMENT = 10,
+        LINE_ATTRIBUTE_AGENT_COMMISSION = 11,
+        LINE_ATTRIBUTE_COMPOUND = 12,
+        LINE_ATTRIBUTE_OTHER = 13;
+
+    const
         PAY_ATTRIBUTE_TYPE_FULL_PRE_PAID_BEFORE_GET_PRODUCT = 1, // Полная предварительная оплата до передачи товара
         PAY_ATTRIBUTE_TYPE_PARTIAL_PRE_PAID_BEFORE_GET_PRODUCT = 2, // Частичная предварительная оплата до передачи товара
         PAY_ATTRIBUTE_TYPE_PRE_PAID = 3, // Аванс
@@ -28,6 +43,8 @@ class Line extends BaseDataObject
     protected $Qty;
     /** @var float */
     protected $Price;
+    /** @var int */
+    protected $lineAttribute;
     /** @var int */
     protected $payAttribute;
     /** @var int */
@@ -68,6 +85,19 @@ class Line extends BaseDataObject
     }
 
     /**
+     * Признак предмета расчёта.
+     * @param int $lineAttribute
+     */
+    public function addLineAttribute($lineAttribute)
+    {
+        if (!in_array($lineAttribute, $this->getLineAttributes())) {
+            throw new \InvalidArgumentException('Wrong line attribute type');
+        }
+
+        $this->lineAttribute = $lineAttribute;
+    }
+
+    /**
      * Получить все возможные налоговые ставки
      */
     protected function getTaxes()
@@ -95,6 +125,28 @@ class Line extends BaseDataObject
             self::PAY_ATTRIBUTE_TYPE_PARTIAL_PRE_PAID_BEFORE_GET_PRODUCT,
             self::PAY_ATTRIBUTE_TYPE_PRE_PAID,
             self::PAY_ATTRIBUTE_TYPE_PRE_PAID_WITH_GET_PRODUCT_AND_CREDIT,
+        ];
+    }
+
+    /**
+     * Получить все возможные признаки предметов расчета
+     */
+    protected function getLineAttributes()
+    {
+        return [
+            self::LINE_ATTRIBUTE_PRODUCT,
+            self::LINE_ATTRIBUTE_TAX_PRODUCT,
+            self::LINE_ATTRIBUTE_WORK,
+            self::LINE_ATTRIBUTE_SERVICE,
+            self::LINE_ATTRIBUTE_GAMBLING_RATE,
+            self::LINE_ATTRIBUTE_GAMBLING_WINNING,
+            self::LINE_ATTRIBUTE_LOTTERY_TICKET,
+            self::LINE_ATTRIBUTE_LOTTERY_WINNING,
+            self::LINE_ATTRIBUTE_PROVIDING_RID,
+            self::LINE_ATTRIBUTE_PAYMENT,
+            self::LINE_ATTRIBUTE_AGENT_COMMISSION,
+            self::LINE_ATTRIBUTE_COMPOUND,
+            self::LINE_ATTRIBUTE_OTHER,
         ];
     }
 }
